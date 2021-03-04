@@ -5,7 +5,6 @@ import './Week.css'
 const Week = ({ arrDays = [] }) => {
   // console.log(arrDays)
 
-
   return (
     <div className="week">
       {arrDays.map((day) => <Day key={day._d} day={day._d} holidays={day.holidays} />)}

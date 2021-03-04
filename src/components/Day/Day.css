@@ -16,3 +16,15 @@
   margin: 0;
   padding: 0;
 }
+
+.day_has-holiday {
+  background-color: rgb(68, 14, 129);
+}
+
+.day_active {
+  background-color: rgb(127, 55, 209);
+}
+
+.day_passed {
+  color: rgb(9, 48, 73);
+}

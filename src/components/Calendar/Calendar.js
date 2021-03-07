@@ -1,29 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Month from '../Month/Month';
 import moment from 'moment';
+import { currentMonthNow } from '../../helpers/GetCurrentMonth'
 
 const Calendar = () => {
-  // initial obj and start week from Monday
-  moment.updateLocale('en', { week: { dow: 1 } });
+  const [currentMonths, setCurrentMonth] = useState([])
+  const [manipulateMonth, setManipulateMonth] = useState(moment.updateLocale('en', { week: { dow: 1, doy: 7 } }))
 
-  const firstDay = moment().startOf('month').startOf('week')
-  const lastDay = moment().endOf('month').endOf('week')
+  // // const month = moment.updateLocale('en', { week: { dow: 1 } });
+  // // console.log(moment.updateLocale('en', { week: { dow: 1 } }))
+  // // console.log(moment(month).add(1, 'month').startOf('month').startOf('week'))
 
-  let day = firstDay.clone()
+  // // useEffect(() => {
+  // //   const monthInInitial = currentMonthNow()
+  // //   setManipulateMonth(month)
 
-  let newArr = []
+  // // }, [month])
 
-  do {
-    newArr.push(day.clone())
-    day.add(1, 'day')
+  useEffect(() => {
+    setCurrentMonth(currentMonthNow(manipulateMonth))
+  }, [manipulateMonth])
 
+  const monthHandlerUp = () => {
+    // const month = moment.updateLocale('en', { week: { dow: 1 } });
+    console.log('добавить месяц')
+    // console.log(manipulateMonth)
+    // setCurrentMonth(() => currentMonthNow(moment(month).add(1, 'month')))
+    setManipulateMonth(moment(manipulateMonth).add(1, 'month'))
+    // console.log(moment(month).add(1, 'month'))
+    // console.log(setCurrentMonth(moment(month).add(1, 'month')))
+    // console.log(moment(manipulateMonth).Month())
   }
 
-  while (!day.isSameOrAfter(lastDay))
+  const monthHandlerDown = () => {
+    console.log('Убрать месяц')
+    setManipulateMonth(moment(manipulateMonth).subtract(1, 'month'))
+  }
+
+
 
   return (
     <>
-      <Month arrWeeks={newArr} />
+      <Month
+        arrWeeks={currentMonths}
+        monthHandlerUp={monthHandlerUp}
+        monthHandlerDown={monthHandlerDown}
+        manipulateMonth={moment(manipulateMonth).format('YYYY-MM') || ''}
+      />
     </>
   )
 }

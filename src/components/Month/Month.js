@@ -5,8 +5,8 @@ import { holidays } from '../../initialState'
 import moment from 'moment';
 // import helperModifyDay from '../../helpers'
 
-const Month = ({ arrWeeks = [] }) => {
-  
+const Month = ({ arrWeeks = [], monthHandlerUp, manipulateMonth, monthHandlerDown }) => {
+
   holidays.forEach((holiday) => {
     // const { date } = i
     // console.log(moment(date, "DD-MM-YYYY hh:mm"))
@@ -21,7 +21,6 @@ const Month = ({ arrWeeks = [] }) => {
           return item.holidays = new Array(timeObj._d)
         }
         if (!item.holidays.some((item) => item.toString() === timeObj._d.toString())) {
-
           // console.log(typeof item.holidays[0].toString() === typeof timeObj._d.toString())
           return item.holidays.push(timeObj._d)
         }
@@ -37,9 +36,7 @@ const Month = ({ arrWeeks = [] }) => {
   const thirdWeek = arrWeeks.slice(14, 21)
   const fourthWeek = arrWeeks.slice(21, 28)
   const fifthWeek = arrWeeks.slice(28, 35)
-  const sixthWeek = arrWeeks.slice(35, 41)
-
-
+  const sixthWeek = arrWeeks.slice(35, 42)
 
   return (
     <div className="month">
@@ -49,7 +46,9 @@ const Month = ({ arrWeeks = [] }) => {
       {fourthWeek && <Week arrDays={fourthWeek} />}
       {fifthWeek.length > 0 && <Week arrDays={fifthWeek} />}
       {sixthWeek.length > 0 && <Week arrDays={sixthWeek} />}
-      <div>fddddddddddd</div>
+      <div>{manipulateMonth}</div>
+      <button type="button" onClick={() => monthHandlerUp()}>Добавь месяц</button>
+      <button type="button" onClick={() => monthHandlerDown()}>Убрать месяц</button>
     </div>
   )
 }
